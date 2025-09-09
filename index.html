@@ -1,472 +1,58 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Workshop - Prompt Library</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Workshop - Prompt Library</title>
 
-        body {
-            font-family: 'Prompt', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
+  <!-- ฟอนต์ -->
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Section */
-        .header {
-            text-align: center;
-            padding: 60px 0;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.3rem;
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        /* Main Content */
-        .main-content {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px 20px 0 0;
-            min-height: 70vh;
-            padding: 40px 0;
-            backdrop-filter: blur(10px);
-        }
-
-        /* Prompt Library Section */
-        .library-section {
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 30px;
-            color: #4a5568;
-        }
-
-        /* Search Bar */
-        .search-container {
-            max-width: 500px;
-            margin: 0 auto 40px;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 15px 50px 15px 20px;
-            font-size: 1.1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 50px;
-            outline: none;
-            transition: all 0.3s ease;
-            font-family: 'Prompt', sans-serif;
-        }
-
-        .search-input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #a0aec0;
-            font-size: 1.2rem;
-        }
-
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .prompt-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 1px solid #f1f5f9;
-        }
-
-        .prompt-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-
-        .card-category {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .ai-platform {
-            background: #f7fafc;
-            color: #4a5568;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            border: 1px solid #e2e8f0;
-        }
-
-        .prompt-section {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .prompt-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 8px;
-        }
-
-        .prompt-text {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #2d3748;
-            border: 1px solid #e2e8f0;
-            white-space: pre-line;
-            max-height: 120px;
-            overflow-y: auto;
-        }
-
-        .copy-btn {
-            background: linear-gradient(135deg, #48bb78, #38a169);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            font-family: 'Prompt', sans-serif;
-        }
-
-        .copy-btn:hover {
-            background: linear-gradient(135deg, #38a169, #2f855a);
-            transform: translateY(-1px);
-        }
-
-        .copy-btn:active {
-            transform: translateY(0);
-        }
-
-        .copy-btn.copied {
-            background: linear-gradient(135deg, #4299e1, #3182ce);
-        }
-
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #2d3748;
-            line-height: 1.3;
-        }
-
-        .card-description {
-            color: #4a5568;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        /* No Results Message */
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            color: #718096;
-            display: none;
-        }
-
-        .no-results h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .header p {
-                font-size: 1.1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .container {
-                padding: 0 15px;
-            }
-
-            .main-content {
-                padding: 30px 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header {
-                padding: 40px 0;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .prompt-card {
-                padding: 20px;
-            }
-
-            .search-input {
-                padding: 12px 45px 12px 15px;
-                font-size: 1rem;
-            }
-
-            .tab-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-
-            .tab-navigation {
-                gap: 8px;
-            }
-        }
-    </style>
+  <!-- ไฟล์สไตล์ -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="header">
-        <div class="container">
-            <h1>AI Workshop</h1>
-            <p>รวม Prompt สำหรับครูและนักเรียน</p>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container">
+      <h1>AI Workshop</h1>
+      <p>รวม Prompt สำหรับครูและนักเรียน</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Prompt Library Section -->
+      <section class="library-section">
+        <h2 class="section-title">Prompt Library</h2>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="ค้นหา prompt ที่ต้องการ..."
+          />
+          <span class="search-icon">🔍</span>
         </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <!-- Prompt Library Section -->
-            <section class="library-section">
-                <h2 class="section-title">Prompt Library</h2>
-                
-                <!-- Search Bar -->
-                <div class="search-container">
-                    <input 
-                        type="text" 
-                        class="search-input" 
-                        id="searchInput"
-                        placeholder="ค้นหา prompt ที่ต้องการ..."
-                    >
-                    <span class="search-icon">🔍</span>
-                </div>
-
-                <!-- Cards Grid -->
-                <div class="cards-grid" id="cardsGrid">
-                    <!-- Cards will be populated by JavaScript -->
-                </div>
-
-                <!-- No Results Message -->
-                <div class="no-results" id="noResults">
-                    <h3>ไม่พบผลลัพธ์</h3>
-                    <p>ลองใช้คำค้นหาอื่น หรือเลือกหมวดหมู่ที่แตกต่างกัน</p>
-                </div>
-            </section>
+        <!-- Cards Grid -->
+        <div class="cards-grid" id="cardsGrid">
+          <!-- Cards will be populated by JavaScript -->
         </div>
-    </main>
 
-    <script>
-        // Sample prompt data
-        const promptsData = [
-            {
-                id: 1,
-                title: "สร้างแผนการสอนรายวิชา",
-                description: "ช่วยครูสร้างแผนการสอนที่มีประสิทธิภาพ พร้อมกิจกรรมการเรียนรู้ที่หลากหลาย เหมาะสำหรับทุกระดับชั้น สามารถปรับใช้กับวิชาต่างๆ ได้",
-                category: "การสอน",
-                aiPlatform: "ChatGPT",
-                prompt: "สร้างแผนการสอนสำหรับวิชา [ชื่อวิชา] ระดับชั้น [ระดับชั้น] หัวข้อ [หัวข้อบทเรียน] โดยมีรายละเอียดดังนี้:\n\n1. วัตถุประสงค์การเรียนรู้\n2. กิจกรรมการเรียนการสอน (3 กิจกรรม)\n3. สื่อการเรียนการสอน\n4. การวัดและประเมินผล\n5. เวลาที่ใช้ในการสอน\n\nให้คำแนะนำเพิ่มเติมสำหรับการจัดการชั้นเรียนด้วย"
-            },
-            {
-                id: 2,
-                title: "ตรวจและให้คำแนะนำงานเขียน",
-                description: "AI ช่วยตรวจสอบไวยากรณ์ โครงสร้างประโยค และให้คำแนะนำในการปรับปรุงงานเขียนของนักเรียน พร้อมเสนอแนวทางพัฒนาทักษะการเขียน",
-                category: "การประเมิน",
-                aiPlatform: "Claude",
-                prompt: "กรุณาตรวจสอบงานเขียนต่อไปนี้และให้คำแนะนำในด้านต่างๆ:\n\n[ใส่งานเขียนของนักเรียน]\n\nโปรดวิเคราะห์และให้คำแนะนำใน:\n1. ไวยากรณ์และการสะกดคำ\n2. โครงสร้างประโยคและย่อหน้า\n3. เนื้อหาและความสมเหตุสมผล\n4. การใช้คำศัพท์และสำนวน\n5. ข้อเสนอแนะเพื่อการพัฒนา\n\nให้คะแนนและเหตุผลประกอบด้วย"
-            },
-            {
-                id: 3,
-                title: "สร้างคำถามทบทวนบทเรียน",
-                description: "สร้างชุดคำถามสำหรับทบทวนบทเรียนในรูปแบบต่างๆ เช่น ปรนัย อัตนัย หรือสถานการณ์จำลอง เพื่อช่วยนักเรียนเตรียมตัวสอบ",
-                category: "การประเมิน",
-                aiPlatform: "Gemini",
-                prompt: "สร้างชุดคำถามทบทวนสำหรับบทเรียนเรื่อง [หัวข้อบทเรียน] ระดับชั้น [ระดับชั้น] จำนวน 15 ข้อ แบ่งเป็น:\n\n1. คำถามปรนัย 4 ตัวเลือก (10 ข้อ)\n2. คำถามอัตนัย (3 ข้อ)\n3. คำถามสถานการณ์จำลอง (2 ข้อ)\n\nให้ระบุเฉลยและคำอธิบายสำหรับทุกข้อ พร้อมระดับความยากง่าย (ง่าย/ปานกลาง/ยาก)"
-            }
-        ];
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults">
+          <h3>ไม่พบผลลัพธ์</h3>
+          <p>ลองใช้คำค้นหาอื่น หรือเลือกหมวดหมู่ที่แตกต่างกัน</p>
+        </div>
+      </section>
+    </div>
+  </main>
 
-        // DOM elements
-        const searchInput = document.getElementById('searchInput');
-        const cardsGrid = document.getElementById('cardsGrid');
-        const noResults = document.getElementById('noResults');
-
-        // Function to create a prompt card
-        function createPromptCard(prompt) {
-            return `
-                <div class="prompt-card" data-title="${prompt.title.toLowerCase()}" data-description="${prompt.description.toLowerCase()}" data-category="${prompt.category.toLowerCase()}">
-                    <div class="card-header">
-                        <span class="card-category">${prompt.category}</span>
-                        <span class="ai-platform">${prompt.aiPlatform}</span>
-                    </div>
-                    <h3 class="card-title">${prompt.title}</h3>
-                    <p class="card-description">${prompt.description}</p>
-                    <div class="prompt-section">
-                        <div class="prompt-label">Prompt:</div>
-                        <div class="prompt-text">${prompt.prompt}</div>
-                        <button class="copy-btn" onclick="copyPrompt('${prompt.id}', this)">📋 Copy Prompt</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Function to render all cards
-        function renderCards(prompts = promptsData) {
-            if (prompts.length === 0) {
-                cardsGrid.style.display = 'none';
-                noResults.style.display = 'block';
-            } else {
-                cardsGrid.style.display = 'grid';
-                noResults.style.display = 'none';
-                cardsGrid.innerHTML = prompts.map(createPromptCard).join('');
-            }
-        }
-
-        // Function to filter cards based on search input
-        function filterCards() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            
-            if (searchTerm === '') {
-                renderCards(promptsData);
-                return;
-            }
-
-            const filteredPrompts = promptsData.filter(prompt => {
-                return prompt.title.toLowerCase().includes(searchTerm) ||
-                       prompt.description.toLowerCase().includes(searchTerm) ||
-                       prompt.category.toLowerCase().includes(searchTerm);
-            });
-
-            renderCards(filteredPrompts);
-        }
-
-        // Function to copy prompt to clipboard
-        function copyPrompt(promptId, buttonElement) {
-            const prompt = promptsData.find(p => p.id == promptId);
-            if (prompt) {
-                navigator.clipboard.writeText(prompt.prompt).then(() => {
-                    // Change button text and style temporarily
-                    const originalText = buttonElement.innerHTML;
-                    buttonElement.innerHTML = '✅ คัดลอกแล้ว!';
-                    buttonElement.classList.add('copied');
-                    
-                    setTimeout(() => {
-                        buttonElement.innerHTML = originalText;
-                        buttonElement.classList.remove('copied');
-                    }, 2000);
-                }).catch(err => {
-                    // Fallback for older browsers
-                    const textArea = document.createElement('textarea');
-                    textArea.value = prompt.prompt;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    
-                    const originalText = buttonElement.innerHTML;
-                    buttonElement.innerHTML = '✅ คัดลอกแล้ว!';
-                    buttonElement.classList.add('copied');
-                    
-                    setTimeout(() => {
-                        buttonElement.innerHTML = originalText;
-                        buttonElement.classList.remove('copied');
-                    }, 2000);
-                });
-            }
-        }
-
-        // Make copyPrompt function globally accessible
-        window.copyPrompt = copyPrompt;
-
-        // Event listeners
-        searchInput.addEventListener('input', filterCards);
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            renderCards();
-        });
-
-        // Add smooth scrolling for better UX
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97c3f0c055742dd0',t:'MTc1NzM5MjEyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  <!-- สคริปต์หลัก -->
+  <script src="script.js" defer></script>
+</body>
 </html>
